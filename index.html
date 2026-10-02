@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<title>Turni</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div>
+      <div class="eyebrow">I miei turni</div>
+      <h1 id="pageTitle">Oggi</h1>
+    </div>
+    <button id="addBtn" class="round">＋</button>
+  </header>
+
+  <main>
+    <section id="home" class="page active">
+      <div class="date-nav">
+        <button id="prevDay">‹</button>
+        <input id="selectedDate" type="date">
+        <button id="nextDay">›</button>
+      </div>
+      <div id="shiftCard" class="card"></div>
+      <div class="section-head"><h2>Impegni</h2><button id="addCommitment2">＋</button></div>
+      <div id="commitments"></div>
+    </section>
+
+    <section id="calendar" class="page">
+      <h2>Calendario</h2>
+      <div class="card">
+        <input id="monthPicker" type="month">
+        <div id="monthGrid" class="month-grid"></div>
+      </div>
+    </section>
+
+    <section id="hours" class="page">
+      <h2>Ore lavorate</h2>
+      <input id="hoursMonth" type="month">
+      <div class="big-number" id="totalHours">0h 00m</div>
+      <div id="counts" class="stats"></div>
+    </section>
+
+    <section id="settings" class="page">
+      <h2>Gestione turni</h2>
+      <div class="card">
+        <div class="section-head"><h3>Ciclo</h3><button id="addShiftBtn">＋</button></div>
+        <div id="shiftEditor"></div>
+        <button id="resetPattern" class="secondary">Ripristina ciclo predefinito</button>
+      </div>
+      <div class="card">
+        <h3>Modifica un singolo giorno</h3>
+        <label>Data<input id="overrideDate" type="date"></label>
+        <label>Turno<select id="overrideShift"></select></label>
+        <button id="saveOverride" class="primary">Salva modifica del giorno</button>
+        <div id="overrideList"></div>
+      </div>
+      <h2>Impostazioni</h2>
+      <div class="card">
+        <label>Inizio ciclo</label>
+        <input id="cycleStart" type="date" value="2026-10-16">
+        <p class="hint">Il 16 ottobre 2026 è Giorno 1.</p>
+      </div>
+      <div class="card">
+        <h3>Ciclo</h3>
+        <div class="pattern-row"><b>1</b><span>Giorno</span><strong>12h 20m</strong></div>
+        <div class="pattern-row"><b>2</b><span>Notte</span><strong>12h 00m</strong></div>
+        <div class="pattern-row"><b>3</b><span>Smonto</span><strong>0h</strong></div>
+        <div class="pattern-row"><b>4</b><span>Riposo</span><strong>0h</strong></div>
+        <div class="pattern-row"><b>5</b><span>Riposo</span><strong>0h</strong></div>
+      </div>
+      <div class="card">
+        <h3>Ferie / pausa ciclo</h3>
+        <label>Dal</label><input id="breakStart" type="date">
+        <label>Al</label><input id="breakEnd" type="date">
+        <button id="saveBreak" class="primary">Salva pausa</button>
+        <div id="breakList"></div>
+      </div>
+    </section>
+  </main>
+
+  <nav class="tabbar">
+    <button data-page="home" class="tab active">🏠<span>Oggi</span></button>
+    <button data-page="calendar" class="tab">📅<span>Calendario</span></button>
+    <button data-page="hours" class="tab">⏱️<span>Ore</span></button>
+    <button data-page="settings" class="tab">⚙️<span>Altro</span></button>
+  </nav>
+</div>
+
+<div id="modal" class="modal hidden">
+  <div class="sheet">
+    <div class="sheet-head"><h2>Nuovo impegno</h2><button id="closeModal">✕</button></div>
+    <label>Titolo<input id="cTitle" placeholder="Es. Appuntamento"></label>
+    <div class="two"><label>Data<input id="cDate" type="date"></label><label>Tipo<select id="cType"><option>Personale</option><option>Lavoro</option><option>Medico</option><option>Altro</option></select></label></div>
+    <div class="two"><label>Inizio<input id="cStart" type="time" value="09:00"></label><label>Fine<input id="cEnd" type="time" value="10:00"></label></div>
+    <label>Luogo<input id="cLocation" placeholder="Facoltativo"></label>
+    <label>Note<textarea id="cNotes" rows="3"></textarea></label>
+    <button id="saveCommitment" class="primary">Salva impegno</button>
+  </div>
+</div>
+<div id="shiftModal" class="modal hidden">
+  <div class="sheet">
+    <div class="sheet-head"><h2 id="shiftModalTitle">Nuovo turno</h2><button id="closeShiftModal">✕</button></div>
+    <label>Nome<input id="sName" placeholder="Es. Giorno"></label>
+    <div class="two"><label>Inizio<input id="sStart" type="time"></label><label>Fine<input id="sEnd" type="time"></label></div>
+    <label>Ore conteggiate (minuti)<input id="sCredited" type="number" min="0" step="5"></label>
+    <button id="saveShift" class="primary">Salva turno</button>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
